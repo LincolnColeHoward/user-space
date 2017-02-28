@@ -42,13 +42,13 @@ router.post ('/users', bodyParser.json (), (req, res) => {
 });
 
 router.post ('/sessions', bodyParser.json (), passport.authenticate ('local'), (req, res) => {
-  if (req.user) return res.redirect ('/');
-  res.json ({success: false});
+  if (req.user) return res.status (201).json ({success: true});
+  res.status (401).json ({success: false});
 });
 
 router.delete ('/sessions', (req, res) => {
   req.session.destroy ();
-  res.redirect ('/');
+  res.status (200).json ({success: true});
 });
 
 module.exports = router;

@@ -14,6 +14,7 @@
   "author": "Lincoln Howard",
   "license": "ISC",
   "dependencies": {
+    "abstract-event-target": "github:lincolncolehoward/abstract-event-target",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.16.1",
     "bootstrap": "^4.0.0-alpha.6",
