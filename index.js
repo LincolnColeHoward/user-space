@@ -20,6 +20,6 @@ exports.init = function (app, mongoose, passport, secret, uri) {
   app.use (passport.initialize ());
   app.use (passport.session ());
   app.use (require ('./routes/userController'));
+  return require ('./models/user');
 }
-exports.User = require ('./models/user');
 exports.api = require ('./api/user-space.js');
