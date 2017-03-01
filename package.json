@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "bundle": "./node_modules/.bin/browserify ./lib.js -o ./dist/user-space.js",
-    "postinstall": "npm run build"
+    "postinstall": "npm run bundle"
   },
   "author": "Lincoln Howard",
   "license": "ISC",
