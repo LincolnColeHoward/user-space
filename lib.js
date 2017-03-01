@@ -1,0 +1,1 @@
+global.User = require ('./api/user-space');

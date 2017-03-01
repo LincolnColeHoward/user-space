@@ -4,12 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "bundle": "./node_modules/.bin/browserify ./lib.js -o ./assets/js/bundle.js",
-    "kill": "./node_modules/.bin/pm2 delete user-space",
-    "prerestart": "npm run kill",
-    "restart": "npm start",
-    "prestart": "npm run bundle",
-    "start": "./node_modules/.bin/pm2 start index.js -i 0 --name user-space --watch index.js"
+    "bundle": "./node_modules/.bin/browserify ./lib.js -o ./dist/user-space.js",
+    "postinstall": "npm run build"
   },
   "author": "Lincoln Howard",
   "license": "ISC",
