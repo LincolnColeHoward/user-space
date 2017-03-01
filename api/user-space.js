@@ -85,7 +85,7 @@ class User extends AET {
       } catch (e) {
         arr [1] = xhr.response;
       }
-      this [dispatcher] ('logout', this, arr);
+      this [AET.dispatcher ()] ('logout', this, arr);
     }
     xhr.send ();
   }
