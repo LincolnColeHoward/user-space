@@ -1,6 +1,7 @@
 module.exports = {
   init: function (app, mongoose, passport, secret, uri) {
     global.mongoose = mongoose;
+    global.user = require ('./models/User');
     global.passport = passport;
     let session = require ('express-session');
     let MongoStore = require ('connect-mongo') (session);
@@ -16,7 +17,6 @@ module.exports = {
         },
         store: store
     }));
-    global.user = require ('./models/User');
     require ('./config/passport');
     require ('./config/passportLocal');
     app.use (passport.initialize ());

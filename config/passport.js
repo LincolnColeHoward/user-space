@@ -1,5 +1,4 @@
 'use strict'
-let User = require ('../models/user');
 passport.serializeUser (function (user, done) {
   done (null, user._id);
 });
