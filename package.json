@@ -33,7 +33,8 @@
     "passport-local": "^1.0.0",
     "reset.js": "github:lincolncolehoward/reset.js",
     "validator": "^7.0.0",
-    "webcomponentsjs": "^1.0.2"
+    "webcomponentsjs": "^1.0.2",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "browserify": "^14.1.0",

@@ -2,7 +2,7 @@
 let router = require ('express').Router ();
 let User = require ('../models/user');
 let bodyParser = require ('body-parser');
-let owasp = require('owasp-password-strength-test').test;
+let zxcvbn = require ('zxcvbn');
 let email = require ('validator').isEmail;
 let phone = require ('validator').isMobilePhone;
 
@@ -10,12 +10,6 @@ router.post ('/users', bodyParser.json (), (req, res) => {
   let error = false;
   let errorMessage = {};
   let obj = {};
-  if (!owasp (req.body.password).strong) {
-    error = true;
-    errorMessage.password = 'not strong';
-  } else {
-    obj.password = req.body.password;
-  }
   if (!email (req.body.email)) {
     error = true;
     errorMessage.email = 'invalid';
@@ -28,15 +22,26 @@ router.post ('/users', bodyParser.json (), (req, res) => {
   } else {
     obj.phone = req.body.phone;
   }
+  let score = zxcvbn (req.body.password).score;
+  if (score !== 4) {
+    error = true;
+    errorMessage.password = 'not strong';
+    errorMessage.password_score = score;
+  } else {
+    obj.password = req.body.password;
+  }
   if (error)
     return res.status (400).json (errorMessage);
-  let user = new User (obj).save ((err) => {
-    if (err)
-      return res.status (500);
-    req.login (user, (err) => {
+  let user = new User (obj);
+  user.hash (() => {
+    user.save ((err) => {
       if (err)
         return res.status (500);
-      res.status (201).json ({email: user.email, phone: user.phone});
+      req.login (user, (err) => {
+        if (err)
+          return res.status (500);
+        res.status (201).json ({email: user.email, phone: user.phone});
+      });
     });
   });
 });
