@@ -16,6 +16,7 @@ module.exports = {
         },
         store: store
     }));
+    global.user = require ('./models/User');
     require ('./config/passport');
     require ('./config/passportLocal');
     app.use (passport.initialize ());
@@ -24,6 +25,6 @@ module.exports = {
   },
   api: require ('./api/user-space.js'),
   get User () {
-    return require ('./models/User');
+    return User;
   }
 }

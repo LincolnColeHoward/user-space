@@ -1,6 +1,5 @@
 'use strict'
 let router = require ('express').Router ();
-let User = require ('../models/user');
 let bodyParser = require ('body-parser');
 let zxcvbn = require ('zxcvbn');
 let email = require ('validator').isEmail;
