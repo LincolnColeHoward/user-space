@@ -45,7 +45,7 @@ class User extends AET {
       } catch (e) {
         arr [1] = xhr.response;
       }
-      this [dispatcher] ('create', this, arr);
+      this [AET.dispatcher ()] ('create', this, arr);
     }
     xhr.send (JSON.stringify (this));
   }
@@ -65,7 +65,7 @@ class User extends AET {
       } catch (e) {
         arr [1] = xhr.response;
       }
-      this [dispatcher] ('login', this, arr);
+      this [AET.dispatcher ()] ('login', this, arr);
     }
     xhr.send (JSON.stringify ());
   }
