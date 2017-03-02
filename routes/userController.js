@@ -7,8 +7,9 @@ let phone = require ('validator').isMobilePhone;
 
 router.use (bodyParser.json ());
 
-function bypass (req, res) {
+function bypass (req, res, next) {
   if (req.user) return res.status (404).json (new Error ('already logged in'));
+  next ();
 }
 
 router.post ('/users', bypass, (req, res) => {
