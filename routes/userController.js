@@ -5,7 +5,13 @@ let zxcvbn = require ('zxcvbn');
 let email = require ('validator').isEmail;
 let phone = require ('validator').isMobilePhone;
 
-router.post ('/users', bodyParser.json (), (req, res) => {
+router.use (bodyParser.json ());
+
+function bypass (req, res) {
+  if (req.user) return res.status (404).json (new Error ('already logged in'));
+}
+
+router.post ('/users', bypass, (req, res) => {
   let error = false;
   let errorMessage = {};
   let obj = {};
@@ -45,14 +51,19 @@ router.post ('/users', bodyParser.json (), (req, res) => {
   });
 });
 
-router.post ('/sessions', bodyParser.json (), passport.authenticate ('local'), (req, res) => {
+router.get ('/sessions', (req, res) => {
+  res.status (200).json (!!req.user);
+})
+
+router.post ('/sessions', bypass, passport.authenticate ('local'), (req, res) => {
   if (req.user) return res.status (201).json ({success: true});
   res.status (401).json ({success: false});
 });
 
 router.delete ('/sessions', (req, res) => {
-  req.session.destroy ();
-  res.status (200).json ({success: true});
+  req.session.destroy ((err) =>{
+    res.status (200).json ({success: true});
+  });
 });
 
 module.exports = router;
