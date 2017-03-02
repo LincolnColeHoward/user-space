@@ -50,6 +50,23 @@ class User extends AET {
     xhr.send (JSON.stringify (this));
   }
   /**
+    * Get the session status and fire the 'status' event.
+    */
+  status () {
+    let xhr = new XMLHttpRequest ();
+    xhr.open ('GET', '/sessions');
+    xhr.onload = () => {
+      if (xhr.status !== 200)
+        arr [0] = xhr.status;
+      try {
+        arr [1] = JSON.parse (xhr.response);
+      } catch (e) {
+        arr [1] = xhr.response;
+      }
+      this [AET.dispatcher ()] ('status', this, arr);
+    }
+  }
+  /**
     * Log the user in. Fire the 'login' event.
     */
   login () {
