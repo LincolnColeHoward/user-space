@@ -12,6 +12,7 @@ function bypass (req, res) {
 }
 
 router.post ('/users', bypass, (req, res) => {
+  console.log ('post /users');
   let error = false;
   let errorMessage = {};
   let obj = {};
@@ -52,15 +53,18 @@ router.post ('/users', bypass, (req, res) => {
 });
 
 router.get ('/sessions', (req, res) => {
+  console.log ('get /sessions');
   res.status (200).json (!!req.user);
 })
 
 router.post ('/sessions', bypass, passport.authenticate ('local'), (req, res) => {
+  console.log ('post /sessions');
   if (req.user) return res.status (201).json ({success: true});
   res.status (401).json ({success: false});
 });
 
 router.delete ('/sessions', (req, res) => {
+  console.log ('delete /sessions');
   req.session.destroy ((err) =>{
     res.status (200).json ({success: true});
   });
