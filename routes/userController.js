@@ -14,7 +14,7 @@ function bypass (req, res, next) {
   next ();
 }
 
-router.post ('/users', bypass, (req, res) => {
+user_router.post ('/users', bypass, (req, res) => {
   let error = false;
   let errorMessage = {};
   let obj = {};
