@@ -21,9 +21,15 @@ module.exports = {
     require ('./config/passportLocal');
     app.use (passport.initialize ());
     app.use (passport.session ());
-    app.use (require ('./routes/userController'));
+    global.controllers = require ('./routes/userController');
   },
   api: require ('./api/user-space.js'),
+  get userController () {
+    return controllers.user_router;
+  },
+  get sessionController () {
+    return controllers.session_router;
+  },
   get User () {
     return User;
   }

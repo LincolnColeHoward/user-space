@@ -1,11 +1,13 @@
 'use strict'
-let router = require ('express').Router ();
+let session_router = require ('express').Router ();
+let user_router = require ('express').Router ();
 let bodyParser = require ('body-parser');
 let zxcvbn = require ('zxcvbn');
 let email = require ('validator').isEmail;
 let phone = require ('validator').isMobilePhone;
 
-router.use (bodyParser.json ());
+session_router.use (bodyParser.json ());
+user_router.use (bodyParser.json ());
 
 function bypass (req, res, next) {
   if (req.user) return res.status (404).json (new Error ('already logged in'));
@@ -13,7 +15,6 @@ function bypass (req, res, next) {
 }
 
 router.post ('/users', bypass, (req, res) => {
-  console.log ('post /users');
   let error = false;
   let errorMessage = {};
   let obj = {};
@@ -53,22 +54,20 @@ router.post ('/users', bypass, (req, res) => {
   });
 });
 
-router.get ('/sessions', (req, res) => {
-  console.log ('get /sessions');
+session_router.get ('/sessions', (req, res) => {
   res.status (200).json (!!req.user);
 })
 
-router.post ('/sessions', bypass, passport.authenticate ('local'), (req, res) => {
-  console.log ('post /sessions');
+session_router.post ('/sessions', bypass, passport.authenticate ('local'), (req, res) => {
   if (req.user) return res.status (201).json ({success: true});
   res.status (401).json ({success: false});
 });
 
-router.delete ('/sessions', (req, res) => {
-  console.log ('delete /sessions');
-  req.session.destroy ((err) =>{
+session_router.delete ('/sessions', (req, res) => {
+  req.session.destroy ((err) => {
     res.status (200).json ({success: true});
   });
 });
 
-module.exports = router;
+exports.user_router = user_router;
+exports.session_router = session_router;
