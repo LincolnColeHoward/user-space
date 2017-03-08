@@ -34,7 +34,7 @@ class User extends AET {
     */
   create () {
     let xhr = new XMLHttpRequest ();
-    xhr.open ('POST', '/users');
+    xhr.open ('POST', User.base + '/users');
     xhr.setRequestHeader ('Content-Type', 'application/json');
     xhr.onload = () => {
       let arr = [null, null];
@@ -54,7 +54,7 @@ class User extends AET {
     */
   status () {
     let xhr = new XMLHttpRequest ();
-    xhr.open ('GET', '/sessions');
+    xhr.open ('GET', User.base + '/sessions');
     xhr.onload = () => {
       if (xhr.status !== 200)
         arr [0] = xhr.status;
@@ -71,7 +71,7 @@ class User extends AET {
     */
   login () {
     let xhr = new XMLHttpRequest ();
-    xhr.open ('POST', '/sessions');
+    xhr.open ('POST', User.base + '/sessions');
     xhr.setRequestHeader ('Content-Type', 'application/json');
     xhr.onload = () => {
       let arr = [null, null];
@@ -84,14 +84,14 @@ class User extends AET {
       }
       this [AET.dispatcher ()] ('login', this, arr);
     }
-    xhr.send (JSON.stringify ());
+    xhr.send (JSON.stringify (this));
   }
   /**
     * Log the user out. Fire the 'logout' event.
     */
   logout () {
     let xhr = new XMLHttpRequest ();
-    xhr.open ('DELETE', '/sessions');
+    xhr.open ('DELETE', User.base + '/sessions');
     xhr.setRequestHeader ('Content-Type', 'application/json');
     xhr.onload = () => {
       let arr = [null, null];
@@ -107,5 +107,5 @@ class User extends AET {
     xhr.send ();
   }
 }
-
+User.base = ''
 module.exports = User;
